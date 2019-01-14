@@ -21,6 +21,7 @@ namespace CSM.Extensions
         {
             base.OnBuildingCreated(id);
             var Instance = BuildingManager.instance;
+            CSM.Log($"Building created: {Instance.m_buildings.m_buffer[id].Info.GetLocalizedTitle()}");
             var position = Instance.m_buildings.m_buffer[id].m_position;  //the building data is stored in Instance.m_buildings.m_buffer[]
             var angle = Instance.m_buildings.m_buffer[id].m_angle;
             var length = Instance.m_buildings.m_buffer[id].Length;

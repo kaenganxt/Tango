@@ -12,8 +12,6 @@ namespace CSM.Commands.Handler
 
         public SegmentCreateHandler()
         {
-            Transaction = TransactionType.NODES;
-
             _initializeSegment = typeof(NetManager).GetMethod("InitializeSegment", AccessTools.all);
         }
 
@@ -25,6 +23,8 @@ namespace CSM.Commands.Handler
 
         private void HandleCreateSegment(SegmentCreateCommand command)
         {
+            CSM.Log($"Segment Created {command.SegmentID} Remote");
+
             NetInfo info = PrefabCollection<NetInfo>.GetPrefab(command.InfoIndex);
             ushort segment = command.SegmentID;
 

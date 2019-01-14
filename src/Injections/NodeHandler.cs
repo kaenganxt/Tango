@@ -9,14 +9,13 @@ namespace CSM.Injections
 {
     public class NodeHandler
     {
-        public static List<ushort> IgnoreSegments { get; } = new List<ushort>();
-        public static List<ushort> IgnoreNodes { get; } = new List<ushort>();
+        public static int IgnoreAll { get; set; } = 0;
     }
 
     [HarmonyPatch(typeof(NetManager))]
     [HarmonyPatch("CreateNode")]
     public class CreateNode
-    {
+    {   
         /// <summary>
         /// This handler is executed after a new NetNode is created using NetManager::CreateNode
         /// </summary>
@@ -24,6 +23,13 @@ namespace CSM.Injections
         /// <param name="node">This is the node id set by CreateNode</param>
         public static void Postfix(bool __result, ref ushort node)
         {
+            CSM.Log($"node created {node} {NodeHandler.IgnoreAll}");
+
+            if (NodeHandler.IgnoreAll > 0)
+            {
+                return;
+            }
+            
             if (__result)
             {
                 NetNode netNode = Singleton<NetManager>.instance.m_nodes.m_buffer[node];
@@ -47,13 +53,23 @@ namespace CSM.Injections
         /// <param name="data">The NetNode object</param>
         public static void Prefix(ushort node, ref NetNode data)
         {
-            if (data.m_flags != 0 && !NodeHandler.IgnoreNodes.Contains(node))
+            CSM.Log($"node released {node} {NodeHandler.IgnoreAll}");
+
+            if (NodeHandler.IgnoreAll == 0 && data.m_flags != 0)
             {
                 Command.SendToAll(new NodeReleaseCommand
                 {
                     NodeId = node
                 });
             }
+
+            // Don't send released segments, as the other clients will also do it
+            NodeHandler.IgnoreAll++;
+        }
+
+        public static void Postfix()
+        {
+            NodeHandler.IgnoreAll--;
         }
 
         // Get target method NetManager::ReleaseNodeImplementation(ushort, ref NetNode)
@@ -73,7 +89,20 @@ namespace CSM.Injections
         /// <param name="node">The node id</param>
         public static void Postfix(ushort node)
         {
+            //CSM.Log($"Update node {node} {NodeHandler.IgnoreAll} {Singleton<NetManager>.instance.m_nodes.m_buffer[node].m_flags}");
+
+            if (NodeHandler.IgnoreAll > 0)
+            {
+                return;
+            }
+
             NetNode netNode = Singleton<NetManager>.instance.m_nodes.m_buffer[node];
+
+            if (netNode.m_flags == 0)
+            {
+                return;
+            }
+
             ushort[] segments = new ushort[8];
             segments[0] = netNode.m_segment0;
             segments[1] = netNode.m_segment1;
@@ -103,6 +132,13 @@ namespace CSM.Injections
         /// <param name="segment">The segment id</param>
         public static void Postfix(bool __result, ref ushort segment)
         {
+            CSM.Log($"Segment Created {segment} {NodeHandler.IgnoreAll}");
+
+            if (NodeHandler.IgnoreAll > 0)
+            {
+                return;
+            }
+
             if (__result)
             {
                 NetSegment seg = Singleton<NetManager>.instance.m_segments.m_buffer[segment];
@@ -132,7 +168,16 @@ namespace CSM.Injections
         /// <param name="keepNodes">If adjacent nodes should also be released</param>
         public static void Prefix(ushort segment, ref NetSegment data, bool keepNodes)
         {
-            if (data.m_flags != 0 && !NodeHandler.IgnoreSegments.Contains(segment))
+            CSM.Log($"Segment Released {segment} {NodeHandler.IgnoreAll}");
+
+            if (NodeHandler.IgnoreAll > 0)
+            {
+                return;
+            }
+
+            NetManager net = NetManager.instance;
+
+            if (data.m_flags != 0)
             {
                 Command.SendToAll(new SegmentReleaseCommand
                 {

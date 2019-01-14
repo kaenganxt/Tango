@@ -47,6 +47,12 @@
         public const byte DistrictCityPolicyCommand = 123;
         public const byte DistrictPolicyUnsetCommand = 124;
         public const byte DistrictCityPolicyUnsetCommand = 125;
+        public const byte CityPolicyCommand = 126;
+        public const byte TransportCreateLineCommand = 127;
+        public const byte TransportReleaseLineCommand = 128;
+        public const byte TransportLineAddStopCommand = 129;
+        public const byte TransportLineRemoveStopCommand = 130;
+        public const byte TransportLineMoveStopCommand = 131;
 
         // 116 - 255
     }

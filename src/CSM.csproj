@@ -98,6 +98,10 @@
     <Compile Include="Commands\Data\NodeUpdateCommand.cs" />
     <Compile Include="Commands\Data\TreeCreateCommand.cs" />
     <Compile Include="Commands\Data\TreeReleaseCommand.cs" />
+    <Compile Include="Commands\Data\TransportCreateLineCommand.cs" />
+    <Compile Include="Commands\Data\TransportLineMoveStopCommand.cs" />
+    <Compile Include="Commands\Data\TransportLineRemoveStopCommand.cs" />
+    <Compile Include="Commands\Data\TransportReleaseLineCommand.cs" />
     <Compile Include="Commands\Data\UnlockAreaCommand.cs" />
     <Compile Include="Commands\Data\WorldInfoCommand.cs" />
     <Compile Include="Commands\Data\ZoneUpdateCommand.cs" />
@@ -113,6 +117,7 @@
     <Compile Include="Commands\Handler\DistrictPolicyUnsetHandler.cs" />
     <Compile Include="Commands\Handler\DistrictReleaseHandler.cs" />
     <Compile Include="Commands\Handler\FinishTransactionHandler.cs" />
+    <Compile Include="Commands\Handler\TransportCreateLineHandler.cs" />
     <Compile Include="Commands\Handler\MoneyHandler.cs" />
     <Compile Include="Commands\Handler\NodeCreateHandler.cs" />
     <Compile Include="Commands\Handler\NodeReleaseHandler.cs" />
@@ -133,6 +138,11 @@
     <Compile Include="Commands\Handler\TreeCreateHandler.cs" />
     <Compile Include="Commands\Handler\TreeMoveHandler.cs" />
     <Compile Include="Commands\Handler\TreeReleaseHandler.cs" />
+    <Compile Include="Commands\Data\TransportLineAddStopCommand.cs" />
+    <Compile Include="Commands\Handler\TransportLineAddStopHandler .cs" />
+    <Compile Include="Commands\Handler\TransportLineMoveStopHandler.cs" />
+    <Compile Include="Commands\Handler\TransportLineRemoveStopHandler.cs" />
+    <Compile Include="Commands\Handler\TransportReleaseLineHandler.cs" />
     <Compile Include="Commands\Handler\UnlockAreaHandler.cs" />
     <Compile Include="Commands\Handler\WorldInfoHandler.cs" />
     <Compile Include="Commands\Handler\ZoneUpdateHandler.cs" />
@@ -150,6 +160,7 @@
     <Compile Include="Injections\NodeHandler.cs" />
     <Compile Include="Injections\TreeHandler.cs" />
     <Compile Include="Injections\ZoneHandler.cs" />
+    <Compile Include="Injections\TransportHandler.cs" />
     <Compile Include="Helpers\UiHelpers.cs" />
     <Compile Include="Extensions\LoadingExtension.cs" />
     <Compile Include="Models\Vector3Surrogate.cs" />

@@ -1,5 +1,6 @@
 ﻿using ColossalFramework.UI;
 using CSM.Models;
+using CSM.Networking;
 using CSM.Panels;
 using Harmony;
 using NLog;
@@ -167,7 +168,7 @@ namespace CSM
         [Obsolete("Use NLog instead.")]
         public static void Log(string message)
         {
-            _logger.Info(message);
+            _logger.Info($"at {MultiplayerManager.Instance.CurrentRole}: {message}");
         }
     }
 }

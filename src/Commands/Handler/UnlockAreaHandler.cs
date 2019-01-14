@@ -14,9 +14,9 @@ namespace CSM.Commands.Handler
 
         private void Handle(UnlockAreaCommand command)
         {
-
             var area = (command.Z * 5) + command.X; //calculate the index
             GameAreaManager.instance.UnlockArea(area);
         }
+        
     }
 }
