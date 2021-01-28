@@ -8,10 +8,12 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
-using CSM.Util;  
+using CSM.Util;
 
 namespace CSM.Commands
 {
+    public class Test {}
+
     public class Command
     {
         private static readonly Dictionary<Type, CommandHandler> _cmdMapping = new Dictionary<Type, CommandHandler>();
