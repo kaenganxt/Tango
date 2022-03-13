@@ -86,4 +86,4 @@ jobs:
     - name: Publish API package
       if: github.ref == 'refs/heads/master'
       working-directory: src/api
-      run: nuget push CitiesSkylinesMultiplayer.API.${{ steps.csm_version.outputs.version }}.0.nupkg ${{secrets.NUGET_API_KEY}} -NonInteractive
+      run: nuget push CitiesSkylinesMultiplayer.API.${{ steps.csm_version.outputs.version }}.0.nupkg ${{secrets.NUGET_API_KEY}} -NonInteractive -Source https://api.nuget.org/v3/index.json
