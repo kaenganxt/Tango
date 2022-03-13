@@ -77,10 +77,10 @@ jobs:
         path: scripts/install.ps1
 
     # Build nuget API package
-    - name: Build nuget API package
-      if: github.ref == 'refs/heads/master'
-      working-directory: src/api
-      run: nuget pack
+    #- name: Build nuget API package
+    #  if: github.ref == 'refs/heads/master'
+    #  working-directory: src/api
+    #  run: nuget pack
 
     # Publish API package
     - name: Publish API package
