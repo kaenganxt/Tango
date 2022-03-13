@@ -76,16 +76,14 @@ jobs:
         name: CSM ${{ steps.csm_version.outputs.version }}
         path: scripts/install.ps1
 
-    # Build nuget API package
-    #- name: Build nuget API package
-    #  if: github.ref == 'refs/heads/master'
-    #  working-directory: src/api
-    #  run: nuget pack
+    # Pack API package (Nuget)
+    - name: Build nuget API package
+      if: github.ref == 'refs/heads/master'
+      working-directory: src/api
+      run: nuget pack -Properties Configuration=Release -NonInteractive
 
-    # Publish API package
+    # Publish API package (Nuget)
     - name: Publish API package
       if: github.ref == 'refs/heads/master'
-      uses: rohith/publish-nuget@v2
-      with:
-        PROJECT_FILE_PATH: src/api/CSM.API.csproj
-        NUGET_KEY: ${{secrets.NUGET_API_KEY}}
+      working-directory: src/api
+      run: nuget push *.nupkg ${{secrets.NUGET_API_KEY}} -NonInteractive
