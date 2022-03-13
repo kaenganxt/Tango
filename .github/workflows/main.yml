@@ -76,19 +76,15 @@ jobs:
         name: CSM ${{ steps.csm_version.outputs.version }}
         path: scripts/install.ps1
 
-  # Deploy API to nuget only on master push
-  deploy:
-    runs-on: windows-latest
-    needs: build
-    if: github.ref == 'refs/heads/master'
-    steps:
     # Build nuget API package
     - name: Build nuget API package
+      if: github.ref == 'refs/heads/master'
       working-directory: src/api
       run: nuget pack
 
     # Publish API package
     - name: Publish API package
+      if: github.ref == 'refs/heads/master'
       uses: rohith/publish-nuget@v2
       with:
         PROJECT_FILE_PATH: src/api/CSM.API.csproj
